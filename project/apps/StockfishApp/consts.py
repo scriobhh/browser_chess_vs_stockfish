@@ -1,0 +1,1 @@
+STOCKFISH_PATH = r'..\..\PycharmProjects\BrowserChessVsStockfish\Stockfish\stockfish.exe'

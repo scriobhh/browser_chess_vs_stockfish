@@ -1,0 +1,114 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Chess Vs Stockfish</title>
+    <script type="module" src="{% static 'StockfishApp/js/stockfish.mjs' %}"></script>
+    <script type="module" src="{% static 'StockfishApp/js/pieces.mjs' %}"></script>
+    <script type="module" src="{% static 'StockfishApp/js/board.mjs' %}"></script>
+    <script type="module" src="{% static 'StockfishApp/js/gamestate.mjs' %}"></script>
+    <script type="module" src="{% static 'StockfishApp/js/gui.mjs' %}"></script>
+    <script type="module" src="{% static 'StockfishApp/js/main.mjs' %}"></script>
+    <!-- <script type="module">
+        import * as main from '{% static 'StockfishApp/js/main.mjs' %}';
+        console.log(main);
+    </script> -->
+    <link rel="stylesheet" href="{% static 'StockfishApp/css/main.css' %}">
+</head>
+<body>
+    {% csrf_token %}
+    {% block chessboard %}{% endblock %}
+
+    <!-- captured pieces go here -->
+    <div id="captured-container">
+        <div id="captured-white"></div>
+        <div id="captured-black"></div>
+    </div>
+
+    <!-- dialogue that lets user choose difficulty and their color -->
+    <div id="select-options-dialogue" style="display: none;">
+        <div class="color-select-container">
+            <p class="color-select-description">
+                Select color
+            </p>
+            <div class="color-select">
+                <button class="dialogue-option color-piece" id="white-option">
+                    <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/white/king.svg' %}" draggable="false">
+                </button>
+                <button class="dialogue-option color-piece" id="black-option">
+                    <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/black/king.svg' %}" draggable="false">
+                </button>
+            </div>
+        </div>
+
+        <div class="difficulty-select-container">
+            <p class="difficulty-select-description">
+                Select difficulty level
+            </p>
+            <div class="difficulty-select">
+                <button class="dialogue-option difficulty-select-num">1</button>
+                <button class="dialogue-option difficulty-select-num">2</button>
+                <button class="dialogue-option difficulty-select-num">3</button>
+                <button class="dialogue-option difficulty-select-num">4</button>
+                <button class="dialogue-option difficulty-select-num">5</button>
+            </div>
+        </div>
+
+        <div class="confirm-container">
+            <button id="select-options-confirm" class="dialogue-option">Confirm</button>
+        </div>
+    </div>
+
+    <!-- dialogue that pops up on pawn promotion -->
+    <div id="piece-select-dialogue-white" class="piece-select-dialogue" style="display: none;">
+        <div class="buttons-container">
+
+            <button class="dialogue-option queen-button">
+                <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/white/queen.svg' %}" draggable="false">
+            </button>
+            <button class="dialogue-option knight-button">
+                <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/white/knight.svg' %}" draggable="false">
+            </button>
+            <button class="dialogue-option rook-button">
+                <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/white/rook.svg' %}" draggable="false">
+            </button>
+            <button class="dialogue-option bishop-button">
+                <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/white/bishop.svg' %}" draggable="false">
+            </button>
+
+        </div>
+    </div>
+
+    <div id="piece-select-dialogue-black" class="piece-select-dialogue" style="display: none;">
+        <div class="buttons-container">
+
+            <button class="dialogue-option queen-button">
+                <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/black/queen.svg' %}" draggable="false">
+            </button>
+            <button class="dialogue-option knight-button">
+                <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/black/knight.svg' %}" draggable="false">
+            </button>
+            <button class="dialogue-option rook-button">
+                <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/black/rook.svg' %}" draggable="false">
+            </button>
+            <button class="dialogue-option bishop-button">
+                <img class="button-piece" src="{% static 'StockfishApp/assets/pieces/black/bishop.svg' %}" draggable="false">
+            </button>
+
+        </div>
+    </div>
+
+    <!-- dialogue that pops up when game ends -->
+    <div id="end-game-dialogue" style="display: none;">
+        <h1 class="end-game-dialogue-text">
+
+        </h1>
+        <p class="end-game-dialogue-text">
+
+        </p>
+    </div>
+
+</body>
+</html>

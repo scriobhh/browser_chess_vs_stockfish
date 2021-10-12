@@ -1,0 +1,353 @@
+body {
+    background-color: #9a8a7e;
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+    display: grid;
+    /* CHANGE BORDER SIZES HERE */
+    grid-template-columns: 1fr 600px 50px 150px 0.5fr;
+    grid-template-rows: 10% 600px auto;
+    grid-template-areas:
+        " . . . . . "
+        " . board-container . captured-container . "
+        " . . . . . ";
+}
+
+
+/*  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ *  +++++++++++++++++ CHESS BOARD +++++++++++++++++++++
+ *  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ */
+
+#board-container {
+    grid-area: board-container;
+    display: grid;
+    /* CHANGE BORDER SIZES HERE */
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+    grid-template-areas: " border ";
+
+    /* this is to prevent user from selecting multiple pieces through mouse drag
+     which would cause bugs */
+    user-select: none;
+}
+
+#border {
+    grid-area: border;
+    background-color: #783f22;
+    display: grid;
+    /* CHANGE BOARD SIZES HERE */
+    grid-template-columns: 30px auto 30px;
+    grid-template-rows: 30px auto 30px;
+    grid-template-areas: 
+        " . . . " 
+        " row-id board . " 
+        " . col-id . ";
+}
+
+#board {
+    grid-area: board;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(8, 1fr);
+    grid-auto-flow: row;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-flow: column;
+}
+
+.square {
+    display: grid;
+    justify-self: stretch;
+}
+
+.square.black {
+    background-color: #949494;
+}
+
+.square.white {
+    background-color: #d0d0d0;
+}
+
+
+/*  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ *  +++++++++ ROW AND COLUMN NUMBERS/LETTERS ++++++++++
+ *  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ */
+
+#row-id {
+    grid-area: row-id;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(8, 1fr);
+    grid-auto-flow: row;
+}
+
+#col-id {
+    grid-area: col-id;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: 1fr;
+    grid-auto-flow: column;
+}
+
+.row-num, 
+.col-letter {
+    user-select: none;
+        
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    font-size: 20px;
+    
+}
+
+
+/*  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ *  +++++++++++++++++++ PIECES ++++++++++++++++++++++++
+ *  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ */
+
+.piece {
+    width: 90%;
+    height: 90%;
+    place-self: center;
+    /*justify-self: stretch;
+    align-self: stretch;*/
+}
+
+.piece:hover {
+    cursor: grab;
+}
+
+
+/*  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ *  ++++++++++++++ PAWN PROMOTION DIALOGUE ++++++++++++
+ *  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ */
+
+
+.piece-select-dialogue{
+    width: 300px;
+    height: 150px;
+    border-radius: 20px;
+    background-color: #b5b5b5;
+
+    display: grid;
+    grid-template-rows: auto calc(85% * 300/150 * 1/4) auto; /* (column fraction * width/height) / 4 */
+    grid-template-columns: auto 85% auto;
+    grid-template-areas: 
+    " . . . "
+    " . buttons-container . "
+    " . . . "
+}
+
+.buttons-container{
+    grid-area: buttons-container;
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.dialogue-option{
+    background-color: #b5b5b5;
+    border-radius: 10px;
+    width: 1fr;
+    height: 1fr;
+
+    border: none;
+    outline: none;
+
+    /* transition-duration: 0.4s; */
+
+}
+
+.dialogue-option:hover {
+    background-color: #dfdfdf;
+    /*color: white;*/
+    cursor: pointer;
+}
+
+
+
+/*  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ *  ++++++++++++++ GAME OPTIONS DIALOGUE ++++++++++++++
+ *  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ */
+
+ #select-options-dialogue{
+    width: 300px;
+    height: 250px;
+    border-radius: 20px;
+    background-color: #b5b5b5;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -70%);
+    
+    display: grid;
+    grid-template-rows: 3fr 3fr 2fr;
+    grid-template-columns: auto;
+    grid-template-areas: 
+    " color "
+    " difficulty "
+    " confirm-button ";
+}
+
+.color-select-container{
+    grid-area: color;
+
+    display: grid;
+    grid-template-rows: auto 50% auto;
+    grid-template-columns: auto 50% auto;
+    grid-template-areas: 
+    " . color-description . "
+    " . color-buttons . "
+    " . . . "
+}
+
+.color-select-description{
+    grid-area: color-description;
+    display: grid;
+    place-items: center;
+}
+
+.color-select{
+    grid-area: color-buttons;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: column;
+}
+
+.button{
+  
+    justify-self: stretch;
+    background-color: red;
+  
+}
+
+.difficulty-select-container{
+    grid-area: difficulty;
+
+    display: grid;
+    grid-template-rows: auto 50% auto;
+    grid-template-columns: auto 50% auto;
+    grid-template-areas: 
+    " . difficulty-description . "
+    " . difficulty-buttons . "
+    " . . . "
+}
+
+.difficulty-select-description{
+    grid-area: difficulty-description;
+    display: grid;
+    place-items: center;
+}
+
+.difficulty-select{
+    grid-area: difficulty-buttons;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-auto-flow: column;
+}
+
+.difficulty-select-num{
+    display: grid;
+    justify-self: stretch;
+    /*background-color: blue;*/
+    place-items: center;
+}
+
+.confirm-container{
+    grid-area: confirm-button;
+    display: grid;
+    place-items: center;
+}
+
+#select-options-confirm{
+    font-size: 1.6em;
+}
+
+
+/*  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ *  +++++++++++ GAME OVER DIALOGUE ++++++++++++++
+ *  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ */
+
+#end-game-dialogue{
+    width: 300px;
+    height: 150px;
+    border-radius: 20px;
+    background-color: #b5b5b5;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -70%);
+
+    display: grid;
+    place-items: center;
+    grid-template-rows: auto 40% 40% auto;
+    grid-template-columns: auto auto auto;
+    grid-template-areas: 
+    " . . . "
+    " . end-heading . "
+    " . end-body . "
+    " . . . "
+}
+
+#end-game-dialogue>h1{
+    grid-area: end-heading;
+    font-size: 1.6em;
+}
+
+#end-game-dialogue>p{
+    grid-area: end-body;
+    font-size: 1em;
+}
+
+
+/*  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ *  +++++++++++ CAPTURED PIECE CONTAINER ++++++++++++++
+ *  +++++++++++++++++++++++++++++++++++++++++++++++++++
+ */
+
+#captured-container{
+    width: 100%;
+    grid-area: captured-container;
+    display: grid;
+
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    " captured-black captured-white "
+    ;
+
+    grid-auto-flow: row;
+
+}
+
+#captured-black{
+    grid-area: captured-black;
+    display: grid;
+    grid-auto-flow: row;
+
+    grid-template-rows: repeat(8, 75px); /* 600 / 8  = 75px */
+    grid-template-columns: 1fr;
+
+}
+
+#captured-white{
+    grid-area: captured-white;
+    display: grid;
+    grid-auto-flow: row;
+
+    grid-template-rows: repeat(8, 75px); /* 600 / 8  = 75px */
+    grid-template-columns: 1fr;
+
+}

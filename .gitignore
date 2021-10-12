@@ -1,0 +1,7 @@
+/venv
+/static
+/.idea
+
+!/Stockfish
+
+db.sqlite3
